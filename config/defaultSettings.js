@@ -1,6 +1,7 @@
+const { AUTH_CLIENT_ID, AUTH_CLIENT_SECRET } = process.env;
+
 export default {
   navTheme: 'dark',
-  // 拂晓蓝
   primaryColor: '#1890ff',
   layout: 'sidemenu',
   contentWidth: 'Fluid',
@@ -11,7 +12,11 @@ export default {
   menu: {
     locale: true,
   },
-  title: 'Ant Design Pro',
+  title: 'Gobs React UI',
   pwa: false,
   iconfontUrl: '',
+  auth: {
+    clientId: AUTH_CLIENT_ID || 'SecRetAuthKey',
+    clientSecret: AUTH_CLIENT_SECRET || 'SecretSuper',
+  },
 };

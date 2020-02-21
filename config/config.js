@@ -21,9 +21,7 @@ const plugins = [
       locale: {
         // default false
         enable: true,
-        // default zh-CN
-        default: 'zh-CN',
-        // default true, when it is true, will use `navigator.language` overwrite default
+        default: 'en-US',
         baseNavigator: true,
       },
       dynamicImport: {
@@ -94,7 +92,7 @@ export default {
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
+          authority: ['super', 'admin', 'user'],
           routes: [
             {
               path: '/',
@@ -111,14 +109,14 @@ export default {
               name: 'admin',
               icon: 'crown',
               component: './Admin',
-              authority: ['admin'],
+              authority: ['super', 'admin'],
               routes: [
                 {
                   path: '/admin/sub-page',
                   name: 'sub-page',
                   icon: 'smile',
                   component: './Welcome',
-                  authority: ['admin'],
+                  authority: ['super', 'admin'],
                 },
               ],
             },
