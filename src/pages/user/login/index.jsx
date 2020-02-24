@@ -5,7 +5,8 @@ import { Link } from 'umi';
 import { connect } from 'dva';
 import LoginFrom from './components/Login';
 import styles from './style.less';
-const { Tab, UserName, Password, Mobile, Captcha, Submit } = LoginFrom;
+
+const { UserName, Password, Submit } = LoginFrom;
 
 const LoginMessage = ({ content }) => (
   <Alert
@@ -35,67 +36,33 @@ const Login = props => {
   return (
     <div className={styles.main}>
       <LoginFrom activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
-        <Tab key="account" tab="账户密码登录">
-          {status === 'error' && loginType === 'account' && !submitting && (
-            <LoginMessage content="账户或密码错误（admin/ant.design）" />
-          )}
+        {status === 'error' && loginType === 'account' && !submitting && (
+          <LoginMessage content="账户或密码错误（admin/ant.design）" />
+        )}
 
-          <UserName
-            name="userName"
-            placeholder="用户名: admin or user"
-            rules={[
-              {
-                required: true,
-                message: '请输入用户名!',
-              },
-            ]}
-          />
-          <Password
-            name="password"
-            placeholder="密码: ant.design"
-            rules={[
-              {
-                required: true,
-                message: '请输入密码！',
-              },
-            ]}
-          />
-        </Tab>
-        <Tab key="mobile" tab="手机号登录">
-          {status === 'error' && loginType === 'mobile' && !submitting && (
-            <LoginMessage content="验证码错误" />
-          )}
-          <Mobile
-            name="mobile"
-            placeholder="手机号"
-            rules={[
-              {
-                required: true,
-                message: '请输入手机号！',
-              },
-              {
-                pattern: /^1\d{10}$/,
-                message: '手机号格式错误！',
-              },
-            ]}
-          />
-          <Captcha
-            name="captcha"
-            placeholder="验证码"
-            countDown={120}
-            getCaptchaButtonText=""
-            getCaptchaSecondText="秒"
-            rules={[
-              {
-                required: true,
-                message: '请输入验证码！',
-              },
-            ]}
-          />
-        </Tab>
+        <UserName
+          name="username"
+          placeholder="Username"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter username',
+            },
+          ]}
+        />
+        <Password
+          name="password"
+          placeholder="Password"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter password',
+            },
+          ]}
+        />
         <div>
           <Checkbox checked={autoLogin} onChange={e => setAutoLogin(e.target.checked)}>
-            自动登录
+            Remember me
           </Checkbox>
           <a
             style={{
@@ -112,7 +79,7 @@ const Login = props => {
           <TaobaoCircleOutlined className={styles.icon} />
           <WeiboCircleOutlined className={styles.icon} />
           <Link className={styles.register} to="/user/register">
-            注册账户
+            Register
           </Link>
         </div>
       </LoginFrom>

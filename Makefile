@@ -2,7 +2,7 @@
 PACKAGES=`go list ./...`
 
 dev:
-	@yarn start:no-mock
+	@REACT_APP_ENV=dev yarn start:no-mock
 
 test:
 	@yarn test

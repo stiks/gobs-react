@@ -13,7 +13,9 @@ import { Result, Button } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
+
 import logo from '../assets/logo.svg';
+
 const noMatch = (
   <Result
     status="403"
@@ -38,7 +40,7 @@ const menuDataRender = menuList =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright="2019 蚂蚁金服体验技术部出品"
+    copyright="2020 Ant Design"
     links={[
       {
         key: 'Ant Design Pro',
@@ -145,7 +147,7 @@ const BasicLayout = props => {
       breadcrumbRender={(routers = []) => [
         {
           path: '/',
-          breadcrumbName: '首页',
+          breadcrumbName: 'Home',
         },
         ...routers,
       ]}

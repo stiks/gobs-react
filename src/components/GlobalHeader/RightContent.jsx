@@ -1,11 +1,12 @@
-import { Tooltip, Tag } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
 import { connect } from 'dva';
+import { Tag } from 'antd';
 import Avatar from './AvatarDropdown';
 import HeaderSearch from '../HeaderSearch';
 import SelectLang from '../SelectLang';
+
 import styles from './index.less';
+
 const ENVTagColor = {
   dev: 'orange',
   test: 'green',
@@ -24,7 +25,7 @@ const GlobalHeaderRight = props => {
     <div className={className}>
       <HeaderSearch
         className={`${styles.action} ${styles.search}`}
-        placeholder="站内搜索"
+        placeholder="Search"
         defaultValue="umi ui"
         options={[
           {
@@ -47,16 +48,6 @@ const GlobalHeaderRight = props => {
         //   //console.log('input', value);
         // }}
       />
-      <Tooltip title="使用文档">
-        <a
-          target="_blank"
-          href="https://pro.ant.design/docs/getting-started"
-          rel="noopener noreferrer"
-          className={styles.action}
-        >
-          <QuestionCircleOutlined />
-        </a>
-      </Tooltip>
       <Avatar />
       {REACT_APP_ENV && (
         <span>

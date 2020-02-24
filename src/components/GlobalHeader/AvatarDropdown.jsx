@@ -3,7 +3,9 @@ import { Avatar, Menu, Spin } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import { router } from 'umi';
+import { stringToColor } from '@/utils/colors';
 import HeaderDropdown from '../HeaderDropdown';
+
 import styles from './index.less';
 
 class AvatarDropdown extends React.Component {
@@ -38,27 +40,40 @@ class AvatarDropdown extends React.Component {
         {menu && (
           <Menu.Item key="center">
             <UserOutlined />
-            个人中心
+            User account
           </Menu.Item>
         )}
         {menu && (
           <Menu.Item key="settings">
             <SettingOutlined />
-            个人设置
+            Settings
           </Menu.Item>
         )}
         {menu && <Menu.Divider />}
 
         <Menu.Item key="logout">
           <LogoutOutlined />
-          退出登录
+          Logout
         </Menu.Item>
       </Menu>
     );
-    return currentUser && currentUser.firstName ? (
+    return currentUser && currentUser.id ? (
       <HeaderDropdown overlay={menuHeaderDropdown}>
         <span className={`${styles.action} ${styles.account}`}>
-          <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
+          {currentUser.avatar ? (
+            <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
+          ) : (
+            <Avatar
+              key={currentUser.id}
+              shape="square"
+              alt="avatar"
+              size="large"
+              style={{ backgroundColor: stringToColor(currentUser.email), marginRight: 5 }}
+            >
+              {currentUser.firstName.substring(0, 1)}
+              {currentUser.lastName.substring(0, 1)}
+            </Avatar>
+          )}
           <span className={styles.name}>{currentUser.firstName}</span>
         </span>
       </HeaderDropdown>
