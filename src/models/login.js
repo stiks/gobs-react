@@ -1,8 +1,9 @@
 import { stringify } from 'querystring';
 import { router } from 'umi';
-import { accountLogin } from '@/services/login';
+import { accountLogin, forgotPassword } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+import { notification } from 'antd';
 import token from '@/utils/token';
 
 const Model = {
@@ -44,6 +45,24 @@ const Model = {
       }
     },
 
+    *forgot({ payload }, { call, put }) {
+      const response = yield call(forgotPassword, payload);
+      yield put({
+        type: 'changeForgotPassword',
+        payload: response,
+      });
+
+      if (response.status === 'ok') {
+        notification.open({
+          message: 'Reset',
+          description: 'Forgot password request has been sent, you should receive email shortly',
+          type: 'success',
+        });
+
+        router.replace('/user/login');
+      }
+    },
+
     logout() {
       const { redirect } = getPageQuery(); // Note: There may be security issues, please note
 
@@ -66,6 +85,9 @@ const Model = {
   reducers: {
     changeLoginStatus(state, { payload }) {
       setAuthority(payload.authority);
+      return { ...state, status: 'ok', type: payload.type };
+    },
+    changeForgotPassword(state, { payload }) {
       return { ...state, status: 'ok', type: payload.type };
     },
   },

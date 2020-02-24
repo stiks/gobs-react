@@ -13,6 +13,9 @@ export async function accountLogin(params) {
   });
 }
 
-export async function getFakeCaptcha(mobile) {
-  return request(`/api/login/captcha?mobile=${mobile}`);
+export async function forgotPassword(params) {
+  return request('/account/reset', {
+    method: 'POST',
+    data: { ...params },
+  });
 }

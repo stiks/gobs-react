@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Form } from 'antd';
 import ItemMap from './map';
-import LoginContext from './LoginContext';
+import FotgotContext from './FotgotContext';
 
 const FormItem = Form.Item;
 
@@ -25,17 +25,7 @@ const LoginItem = props => {
   const [setCount] = useState(props.countDown || 0);
   const [timing, setTiming] = useState(false); // 这么写是为了防止restProps中 带入 onChange, defaultValue, rules props tabUtil
 
-  const {
-    onChange,
-    customProps,
-    defaultValue,
-    rules,
-    name,
-    updateActive,
-    type,
-    tabUtil,
-    ...restProps
-  } = props;
+  const { onChange, customProps, defaultValue, rules, name, type, tabUtil, ...restProps } = props;
 
   useEffect(() => {
     let interval = 0;
@@ -78,18 +68,12 @@ Object.keys(ItemMap).forEach(key => {
   const item = ItemMap[key];
 
   LoginItems[key] = props => (
-    <LoginContext.Consumer>
+    <FotgotContext.Consumer>
       {context => (
-        <LoginItem
-          customProps={item.props}
-          rules={item.rules}
-          {...props}
-          type={key}
-          {...context}
-          updateActive={context.updateActive}
-        />
+        <LoginItem customProps={item.props} rules={item.rules} {...props} type={key} {...context} />
       )}
-    </LoginContext.Consumer>
+    </FotgotContext.Consumer>
   );
 });
+
 export default LoginItems;

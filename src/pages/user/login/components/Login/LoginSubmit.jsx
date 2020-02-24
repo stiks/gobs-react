@@ -1,7 +1,9 @@
-import { Button, Form } from 'antd';
 import React from 'react';
+import { Button, Form } from 'antd';
 import classNames from 'classnames';
+
 import styles from './index.less';
+
 const FormItem = Form.Item;
 
 const LoginSubmit = ({ className, ...rest }) => {

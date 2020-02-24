@@ -83,6 +83,16 @@ export default {
           path: '/user/login',
           component: './user/login',
         },
+        {
+          name: 'register',
+          path: '/user/register',
+          component: './user/register',
+        },
+        {
+          name: 'forgot',
+          path: '/user/forgot',
+          component: './user/forgot',
+        },
       ],
     },
     {

@@ -1,6 +1,5 @@
-import { AlipayCircleOutlined, TaobaoCircleOutlined, WeiboCircleOutlined } from '@ant-design/icons';
-import { Alert, Checkbox } from 'antd';
 import React, { useState } from 'react';
+import { Alert, Checkbox } from 'antd';
 import { Link } from 'umi';
 import { connect } from 'dva';
 import LoginFrom from './components/Login';
@@ -64,20 +63,12 @@ const Login = props => {
           <Checkbox checked={autoLogin} onChange={e => setAutoLogin(e.target.checked)}>
             Remember me
           </Checkbox>
-          <a
-            style={{
-              float: 'right',
-            }}
-          >
-            忘记密码
-          </a>
+          <Link className={styles.register} style={{ float: 'right' }} to="/user/forgot">
+            Forgot password
+          </Link>
         </div>
-        <Submit loading={submitting}>登录</Submit>
+        <Submit loading={submitting}>Submit</Submit>
         <div className={styles.other}>
-          其他登录方式
-          <AlipayCircleOutlined className={styles.icon} />
-          <TaobaoCircleOutlined className={styles.icon} />
-          <WeiboCircleOutlined className={styles.icon} />
           <Link className={styles.register} to="/user/register">
             Register
           </Link>
