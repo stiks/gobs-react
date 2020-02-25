@@ -84,14 +84,15 @@ export default {
           component: './user/login',
         },
         {
-          name: 'register',
-          path: '/user/register',
-          component: './user/register',
-        },
-        {
           name: 'forgot',
           path: '/user/forgot',
           component: './user/forgot',
+        },
+        {
+          name: 'register',
+          icon: 'smile',
+          path: '/user/register',
+          component: './user/register',
         },
       ],
     },
@@ -135,6 +136,12 @@ export default {
               icon: 'table',
               path: '/list',
               component: './ListTableList',
+            },
+            {
+              name: 'settings',
+              icon: 'smile',
+              path: '/settings',
+              component: './settings',
             },
             {
               component: './404',

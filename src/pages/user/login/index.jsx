@@ -3,6 +3,7 @@ import { Alert, Checkbox } from 'antd';
 import { Link } from 'umi';
 import { connect } from 'dva';
 import LoginFrom from './components/Login';
+
 import styles from './style.less';
 
 const { UserName, Password, Submit } = LoginFrom;
