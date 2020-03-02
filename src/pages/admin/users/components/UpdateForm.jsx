@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, DatePicker, Input, Modal, Radio, Select, Steps } from 'antd';
+
 const FormItem = Form.Item;
 const { Step } = Steps;
 const { TextArea } = Input;
@@ -14,7 +15,7 @@ const formLayout = {
   },
 };
 
-const UpdateForm = props => {
+const UpdateUserForm = props => {
   const [formVals, setFormVals] = useState({
     name: props.values.name,
     desc: props.values.desc,
@@ -241,4 +242,4 @@ const UpdateForm = props => {
   );
 };
 
-export default UpdateForm;
+export default UpdateUserForm;

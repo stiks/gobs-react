@@ -1,21 +1,17 @@
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, Dropdown, Menu, message } from 'antd';
 import React, { useState, useRef } from 'react';
+import { Button, Dropdown, Menu, message } from 'antd';
+import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { queryUsers, updateUser, addUser, removeUser } from '@/services/users';
 import ProTable from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import { queryRule, updateRule, addRule, removeRule } from './service';
-/**
- * 添加节点
- * @param fields
- */
 
 const handleAdd = async fields => {
   const hide = message.loading('正在添加');
 
   try {
-    await addRule({ ...fields });
+    await addUser({ ...fields });
     hide();
     message.success('添加成功');
     return true;
@@ -31,13 +27,13 @@ const handleAdd = async fields => {
  */
 
 const handleUpdate = async fields => {
-  const hide = message.loading('正在配置');
+  const hide = message.loading('Loading users ...');
 
   try {
-    await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
+    await updateUser(fields.id, {
+      fistName: fields.fistName,
+      lastName: fields.lastName,
+      email: fields.email,
     });
     hide();
     message.success('配置成功');
@@ -58,9 +54,7 @@ const handleRemove = async selectedRows => {
   if (!selectedRows) return true;
 
   try {
-    await removeRule({
-      key: selectedRows.map(row => row.key),
-    });
+    await removeUser(selectedRows.map(row => row.id));
     hide();
     message.success('删除成功，即将刷新');
     return true;
@@ -71,7 +65,7 @@ const handleRemove = async selectedRows => {
   }
 };
 
-const TableList = () => {
+const Users = () => {
   const [sorter, setSorter] = useState('');
   const [createModalVisible, handleModalVisible] = useState(false);
   const [updateModalVisible, handleUpdateModalVisible] = useState(false);
@@ -79,8 +73,8 @@ const TableList = () => {
   const actionRef = useRef();
   const columns = [
     {
-      title: '规则名称',
-      dataIndex: 'name',
+      title: 'First Name',
+      dataIndex: 'firstName',
       rules: [
         {
           required: true,
@@ -89,49 +83,56 @@ const TableList = () => {
       ],
     },
     {
-      title: '描述',
-      dataIndex: 'desc',
-      valueType: 'textarea',
+      title: 'Last Name',
+      dataIndex: 'lastName',
+      rules: [
+        {
+          required: true,
+          message: '规则名称为必填项',
+        },
+      ],
     },
     {
-      title: '服务调用次数',
-      dataIndex: 'callNo',
+      title: 'Email',
+      dataIndex: 'email',
+    },
+    {
+      title: 'Role',
+      dataIndex: 'role',
       sorter: true,
-      hideInForm: true,
-      renderText: val => `${val} 万`,
     },
     {
-      title: '状态',
+      title: 'Status',
       dataIndex: 'status',
       hideInForm: true,
       valueEnum: {
         0: {
-          text: '关闭',
+          text: 'Default',
           status: 'Default',
         },
         1: {
-          text: '运行中',
+          text: 'Processing',
           status: 'Processing',
         },
         2: {
-          text: '已上线',
+          text: 'Success',
           status: 'Success',
         },
         3: {
-          text: '异常',
+          text: 'Error',
           status: 'Error',
         },
       },
     },
     {
-      title: '上次调度时间',
+      title: 'Updated at',
       dataIndex: 'updatedAt',
       sorter: true,
       valueType: 'dateTime',
       hideInForm: true,
     },
     {
-      title: '操作',
+      title: 'Actions',
       dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
@@ -142,10 +143,8 @@ const TableList = () => {
               setStepFormValues(record);
             }}
           >
-            配置
+            Edit
           </a>
-          <Divider type="vertical" />
-          <a href="">订阅警报</a>
         </>
       ),
     },
@@ -153,9 +152,9 @@ const TableList = () => {
   return (
     <PageHeaderWrapper>
       <ProTable
-        headerTitle="查询表格"
+        headerTitle="List users"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         onChange={(_, _filter, _sorter) => {
           const sorterResult = _sorter;
 
@@ -168,7 +167,7 @@ const TableList = () => {
         }}
         toolBarRender={(action, { selectedRows }) => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> 新建
+            <PlusOutlined /> New
           </Button>,
           selectedRows && selectedRows.length > 0 && (
             <Dropdown
@@ -182,20 +181,20 @@ const TableList = () => {
                   }}
                   selectedKeys={[]}
                 >
-                  <Menu.Item key="remove">批量删除</Menu.Item>
-                  <Menu.Item key="approval">批量审批</Menu.Item>
+                  <Menu.Item key="remove">Remove</Menu.Item>
+                  <Menu.Item key="approval">Approve</Menu.Item>
                 </Menu>
               }
             >
               <Button>
-                批量操作 <DownOutlined />
+                Down <DownOutlined />
               </Button>
             </Dropdown>
           ),
         ]}
         tableAlertRender={(selectedRowKeys, selectedRows) => (
           <div>
-            已选择{' '}
+            Selected{' '}
             <a
               style={{
                 fontWeight: 600,
@@ -203,13 +202,13 @@ const TableList = () => {
             >
               {selectedRowKeys.length}
             </a>{' '}
-            项&nbsp;&nbsp;
+            users&nbsp;&nbsp;
             <span>
               服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
             </span>
           </div>
         )}
-        request={params => queryRule(params)}
+        request={params => queryUsers(params)}
         columns={columns}
         rowSelection={{}}
       />
@@ -258,4 +257,4 @@ const TableList = () => {
   );
 };
 
-export default TableList;
+export default Users;
