@@ -36,7 +36,7 @@ class Register extends Component {
   state = {
     count: 0,
     confirmDirty: false,
-    visible: false,
+    visible: true,
     help: '',
   };
 
@@ -190,8 +190,52 @@ class Register extends Component {
           <FormattedMessage id="register.register.register" />
         </h3>
         <Form onSubmit={this.handleSubmit}>
+          <Row gutter={10}>
+            <Col span={12}>
+              <FormItem>
+                {getFieldDecorator('firstName', {
+                  rules: [
+                    {
+                      required: true,
+                      message: formatMessage({
+                        id: 'register.firstName.required',
+                      }),
+                    },
+                  ],
+                })(
+                  <Input
+                    size="large"
+                    placeholder={formatMessage({
+                      id: 'register.firstName.placeholder',
+                    })}
+                  />,
+                )}
+              </FormItem>
+            </Col>
+            <Col span={12}>
+              <FormItem>
+                {getFieldDecorator('lastName', {
+                  rules: [
+                    {
+                      required: true,
+                      message: formatMessage({
+                        id: 'register.lastName.required',
+                      }),
+                    },
+                  ],
+                })(
+                  <Input
+                    size="large"
+                    placeholder={formatMessage({
+                      id: 'register.lastName.placeholder',
+                    })}
+                  />,
+                )}
+              </FormItem>
+            </Col>
+          </Row>
           <FormItem>
-            {getFieldDecorator('mail', {
+            {getFieldDecorator('email', {
               rules: [
                 {
                   required: true,
@@ -209,6 +253,7 @@ class Register extends Component {
             })(
               <Input
                 size="large"
+                style={{ width: '250px' }}
                 placeholder={formatMessage({
                   id: 'register.email.placeholder',
                 })}
@@ -257,6 +302,7 @@ class Register extends Component {
                 <Input
                   size="large"
                   type="password"
+                  style={{ width: '250px' }}
                   placeholder={formatMessage({
                     id: 'register.password.placeholder',
                   })}
@@ -281,6 +327,7 @@ class Register extends Component {
               <Input
                 size="large"
                 type="password"
+                style={{ width: '250px' }}
                 placeholder={formatMessage({
                   id: 'register.confirm-password.placeholder',
                 })}
@@ -324,20 +371,24 @@ class Register extends Component {
               </Col>
             </Row>
           </FormItem>
-          <FormItem>
-            <Button
-              size="large"
-              loading={submitting}
-              className={styles.submit}
-              type="primary"
-              htmlType="submit"
-            >
-              <FormattedMessage id="register.register.register" />
-            </Button>
-            <Link className={styles.login} to="/user/login">
-              <FormattedMessage id="register.register.sign-in" />
-            </Link>
-          </FormItem>
+          <Row>
+            <Col span={12}>
+              <Button
+                size="large"
+                loading={submitting}
+                className={styles.submit}
+                type="primary"
+                htmlType="submit"
+              >
+                <FormattedMessage id="register.register.register" />
+              </Button>
+            </Col>
+            <Col span={12}>
+              <Link className={styles.login} to="/user/login">
+                <FormattedMessage id="register.register.sign-in" />
+              </Link>
+            </Col>
+          </Row>
         </Form>
       </div>
     );
